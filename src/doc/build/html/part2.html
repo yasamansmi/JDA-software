@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Part 2: Scalability &#8212; Bike Sharing 1.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jda Software" href="README.html" />
+    <link rel="prev" title="Part 1: Building the Model" href="part1.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="part-2-scalability">
+<h1>Part 2: Scalability<a class="headerlink" href="#part-2-scalability" title="Permalink to this headline">¶</a></h1>
+<p>The model used in this package is Random Forest and the answer to this part will also be based on this algorithm.</p>
+<section id="challenges">
+<h2>Challenges<a class="headerlink" href="#challenges" title="Permalink to this headline">¶</a></h2>
+<p>One of the parts in which even the development of this package came to a bottleneck, was hyperparameter tuning. A lot of experiments are usually performed to achieve the optimal hyperparameters.  The hyperparameters space could be large and one may not be able to use every combination, therefore the package has used random search in hyperparameter tuning. One should make sure of the target accuracy when making decisions about the trade-off of costs. Another useful method would be to definitely track versions and hyperparameters of the model and store them in the database for avoiding redundant computations.
+In addition, when it comes to random forests, one can achieve a higher accuracy and less overfitting by increasing the number of trees, however, this modification can result in a long processing time due to complexity.
+In terms of algorithm complexity, two measures of time complexity and space complexity should be taken into account.</p>
+</section>
+<section id="complexity">
+<h2>Complexity<a class="headerlink" href="#complexity" title="Permalink to this headline">¶</a></h2>
+<p>To write computation complexity we are assuming:
+* n= number of training examples
+* d= number of dimensions of the data
+* k= number of decision trees</p>
+<p>The complexity therefore becomes:</p>
+<ul class="simple">
+<li><p>Training Time Complexity = O(n*log(n)*d*k)</p></li>
+<li><p>Inference Complexity = O(depth of tree* k)</p></li>
+<li><p>Space Complexity = O(depth of tree * k)</p></li>
+</ul>
+<p>Which although is more complex than decision trees, performs faster than many other machine learning models and makes the Random Forest a goos choice.</p>
+</section>
+<section id="suggested-solutions">
+<h2>Suggested Solutions<a class="headerlink" href="#suggested-solutions" title="Permalink to this headline">¶</a></h2>
+<p><strong>Python vs. C/C++</strong>:   The package utilized in this model was ensemble learning from sklearn. Sklearn is mainly written in Python except for some core algorithms written with Cython. In sklearn Numpy is used for dealing with high-performance linear algebra calculation. If the core code can be written in C/C++, it might result in a better performance.</p>
+<p><strong>Choice of Processing Unit</strong>:  For hardware choice, the developed models that CPUs are not ideal for large-scale machine learning and can quickly become a bottleneck. For parallelized computations, GPUs that are vector processors can be used. However, GPUs have a lot of power consumption and could be expensive.</p>
+<p><strong>Data Formats</strong>: In choosing the data format, particularly in distributed systems, the HDF5 format can be effective. This format can also contain metadata which makes it easier for the data scientist to work with. They can easily have different aggregation levels which seem desirable for particularly this case with two levels of hour and day.</p>
+<p><strong>Parallellizing</strong>: When it comes to the model selection, the models with inherent parallelizing ability help a lot. Notably, In training the random forest model, the divide and conquer can easily be utilized. One can easily decompose the computations in this algorithm, run them independently and aggregate them later. To this end, both functional decomposition and data decomposition can be performed. In a functional approach, the different parts of the models, that are trees in this case, can be splitted and executed parallely in different devices.  For the data decomposition approach, data is divided into chunks, and multiple machines can perform the exact computation on different data, which is again aligned with how random forest works which is an ensemble manner.</p>
+<p><strong>Apache Spark</strong>: Another helpful framework that can be used for computation is  the Apache Spark. It has a lot of flexibility and can Join between different data structures. Spark can process large volumes of data and split them across different clusters using Resilient Distributed Dataset (RDD), driver node, and several worker nodes. In the scaling task, one can easily add nodes to the cluster, and avoid buying new hardwares, by easily buying new nodes. Spark can be utilized starting from Gigabytes to Terabytes of data and also for streaming data.</p>
+<p>For Spark, Random Forest is a perfect suit. In Random Forests, since each tree is trained independently, multiple trees can be trained in parallel along with the parallelization in single trees. Therefore, a distributed version of the algorithm can be created. To this end, Spark’s MLlib package can be used. Based on MLib documentation a variable number of sub-trees are trained in parallel, where the number is optimized on each iteration per memory constraints.
+Therefore,  Random Forest is parallelized by generating different models on different nodes, splitting the number of needed trees, and finally taking the mean of each one.</p>
+<p><strong>Resource Utilization</strong>:  Serverless architecture like lambda AWS can be utilized to minimize resource utilization since it can be paid per execution. To avoid the costs while using the cloud, one can first run a minimal version of the model on an owned resource and then run the original version on the cloud. Using the lambda function as a service in AWS could save money and provide flexibility for the team.</p>
+</section>
+<section id="my-experience">
+<h2>My Experience<a class="headerlink" href="#my-experience" title="Permalink to this headline">¶</a></h2>
+<p>I have been writing lambda function in the past year as a responsibility in my data science job. Although I have not worked with Spark in my data science job, since we were mostly working with relational databesed such as PostreSQL, I have been learning in Spark for personal development and I’m familiar with Mlib package and I believe I can easily apply it to work purposes.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Bike Sharing</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="part1.html">Part 1: Building the Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 2: Scalability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#challenges">Challenges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#complexity">Complexity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#suggested-solutions">Suggested Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#my-experience">My Experience</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">jda Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">src</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="part1.html" title="previous chapter">Part 1: Building the Model</a></li>
+      <li>Next: <a href="README.html" title="next chapter">jda Software</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Yasaman Smaiee.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/part2.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

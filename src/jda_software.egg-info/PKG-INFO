@@ -1,0 +1,28 @@
+Metadata-Version: 2.1
+Name: jda-software
+Version: 0.1.0
+Summary: A package for performing forecast on Bike Sharing dataset
+Home-page: UNKNOWN
+Author: Yasaman Samiee
+Author-email: Yasaman.msamiee@gamil.com
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.7.6,<3.10.0
+
+#  JDA Software
+
+A package to forecast the cnt 
+
+## Installation
+
+For installation please first install [Poetry](https://python-poetry.org/docs/). Then make a virtual evironment using poetry. 
+
+```sh
+poetry install
+```
+
+## Random Forest to the rescue
+
+Tree-based models, such as Decision Trees, Random Forests, and Boosted Trees, typically don't perform well with one-hot encodings with lots of levels. This is because they pick the feature to split on based on how well that splitting the data on that feature will "purify" it.
+
+

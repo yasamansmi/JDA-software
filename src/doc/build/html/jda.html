@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>jda package &#8212; Bike Sharing 1.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jda.tools package" href="jda.tools.html" />
+    <link rel="prev" title="src" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="jda-package">
+<h1>jda package<a class="headerlink" href="#jda-package" title="Permalink to this headline">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="jda.tools.html">jda.tools package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jda.tools.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jda.tools.html#module-jda.tools.tools">jda.tools.tools module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jda.tools.html#module-jda.tools">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-jda.pipeline">
+<span id="jda-pipeline-module"></span><h2>jda.pipeline module<a class="headerlink" href="#module-jda.pipeline" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jda.pipeline.Pipeline">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jda.pipeline.</span></span><span class="sig-name descname"><span class="pre">Pipeline</span></span><a class="reference internal" href="_modules/jda/pipeline.html#Pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.pipeline.Pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jda.randomforest.RandomForest" title="jda.randomforest.RandomForest"><code class="xref py py-class docutils literal notranslate"><span class="pre">jda.randomforest.RandomForest</span></code></a></p>
+<p>Class for running the pipline. Including preprocessing, optional hyperparameter
+tuning, training and inference.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>path<span class="classifier">string</span></dt><dd><p>The path of the dataframe on which the training is done, by default path to the bikesharing dataset</p>
+</dd>
+<dt>target_value<span class="classifier">sting</span></dt><dd><p>The name of the column of target variable.</p>
+</dd>
+<dt>lags: int</dt><dd><p>Number of lagged target values to be used in the modeling process</p>
+</dd>
+<dt>cross_validation<span class="classifier">bool</span></dt><dd><p>If True, cross validation will run. (Takes time to run), default is Flase and the best parameters have been chosen before.</p>
+</dd>
+<dt>cv: int</dt><dd><p>The number of folds in cross validation, default is set to be 3</p>
+</dd>
+<dt>n_inference: int</dt><dd><p>Number of random points to choose from inital dataset to perform the inference.</p>
+</dd>
+<dt>inference_input: pd.DataFrame</dt><dd><p>A sample dataframe consisting of initial training features to perform the infernce on.</p>
+</dd>
+<dt>model: sklearn.ensemble._forest.RandomForestRegressor</dt><dd><p>The trained random forest model.</p>
+</dd>
+<dt>dataframe: pd.DataFrame</dt><dd><p>dataframe used for training. Default is the hourly data from UCI repository.</p>
+</dd>
+<dt>omit_features: list</dt><dd><p>The list of features to be omited from the dataset. default is [“dteday”, “instant”, “casual”, “registered”]</p>
+</dd>
+<dt>feature_importance: bool</dt><dd><p>True for ploting the feature importance histogram, False for not plotting.default is True.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.pipeline.Pipeline.run_inference">
+<span class="sig-name descname"><span class="pre">run_inference</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/pipeline.html#Pipeline.run_inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.pipeline.Pipeline.run_inference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.pipeline.Pipeline.run_training_pipeline">
+<span class="sig-name descname"><span class="pre">run_training_pipeline</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/pipeline.html#Pipeline.run_training_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.pipeline.Pipeline.run_training_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>” Runs the preprocessing, tuning and training pipeline.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-jda.preprocessing">
+<span id="jda-preprocessing-module"></span><h2>jda.preprocessing module<a class="headerlink" href="#module-jda.preprocessing" title="Permalink to this headline">¶</a></h2>
+<p>Preproceccing and feature engineering steps</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="jda.preprocessing.Preprocessing">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jda.preprocessing.</span></span><span class="sig-name descname"><span class="pre">Preprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cnt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lag_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/preprocessing.html#Preprocessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.preprocessing.Preprocessing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for performing preprocessing and feature engineering steps.</p>
+<dl class="simple">
+<dt>data<span class="classifier">pd.DataFrame</span></dt><dd><p>Initial datafarme used for train and test.</p>
+</dd>
+<dt>target_column<span class="classifier">str</span></dt><dd><p>Name of the target column to be forecasted.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.preprocessing.Preprocessing.add_lags">
+<span class="sig-name descname"><span class="pre">add_lags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lag_n</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="reference internal" href="_modules/jda/preprocessing.html#Preprocessing.add_lags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.preprocessing.Preprocessing.add_lags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add lags of the target variable to the dataframe and remove the initial null rows</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.preprocessing.Preprocessing.omit_columns">
+<span class="sig-name descname"><span class="pre">omit_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omit_features</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/preprocessing.html#Preprocessing.omit_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.preprocessing.Preprocessing.omit_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Omit columns that are not to be used in the training process.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.preprocessing.Preprocessing.remove_nulls">
+<span class="sig-name descname"><span class="pre">remove_nulls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/preprocessing.html#Preprocessing.remove_nulls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.preprocessing.Preprocessing.remove_nulls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removnig records with at leat one columns value of null</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-jda.randomforest">
+<span id="jda-randomforest-module"></span><h2>jda.randomforest module<a class="headerlink" href="#module-jda.randomforest" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jda.randomforest.RandomForest">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">jda.randomforest.</span></span><span class="sig-name descname"><span class="pre">RandomForest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cnt'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/randomforest.html#RandomForest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.randomforest.RandomForest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.randomforest.RandomForest.cross_validation">
+<span class="sig-name descname"><span class="pre">cross_validation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">123</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/randomforest.html#RandomForest.cross_validation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.randomforest.RandomForest.cross_validation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs corss validation on training data and yields the best model and parameters.</p>
+<dl class="simple">
+<dt>n_iter: int</dt><dd><p>Number of parameter settings that are sampled.</p>
+</dd>
+<dt>cv: int</dt><dd><p>Determines the cross-validation splitting strategy.</p>
+</dd>
+<dt>verbose: int</dt><dd><p>Controls the verbosity: the higher, the more messages.</p>
+</dd>
+<dt>random_state: int</dt><dd><p>random seed for [performing cross validation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.randomforest.RandomForest.inference">
+<span class="sig-name descname"><span class="pre">inference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/randomforest.html#RandomForest.inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.randomforest.RandomForest.inference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yields the forecasted value in the inference.</p>
+<dl class="simple">
+<dt>X: np.array</dt><dd><p>The feature array for forecasting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.randomforest.RandomForest.test_model">
+<span class="sig-name descname"><span class="pre">test_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/randomforest.html#RandomForest.test_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.randomforest.RandomForest.test_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests the model using the test data.</p>
+<dl class="simple">
+<dt>model: sklearn.ensemble._forest.RandomForestRegressor</dt><dd><p>RandomForestRegressor instance trained using sklearn.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.randomforest.RandomForest.train_random_forest">
+<span class="sig-name descname"><span class="pre">train_random_forest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">123</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/randomforest.html#RandomForest.train_random_forest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.randomforest.RandomForest.train_random_forest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiaies the sklearn random forest instance and runs the training.</p>
+<dl class="simple">
+<dt>random_state: int</dt><dd><p>random seed for initiating RandomForest model.</p>
+</dd>
+</dl>
+<p>n_estimators: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jda.randomforest.RandomForest.train_test_split">
+<span class="sig-name descname"><span class="pre">train_test_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">123</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jda/randomforest.html#RandomForest.train_test_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jda.randomforest.RandomForest.train_test_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>splits the train and test dataset to create X_train,X_test, y_train, y_test arrays.</p>
+<dl class="simple">
+<dt>random_state: int</dt><dd><p>random seed for deviding train and test.</p>
+</dd>
+<dt>test_size: float</dt><dd><p>proportion of data to be used for testing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-jda">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-jda" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Bike Sharing</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">jda Software</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">jda package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">src</a></li>
+      <li>Next: <a href="jda.tools.html" title="next chapter">jda.tools package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Yasaman Smaiee.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/jda.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

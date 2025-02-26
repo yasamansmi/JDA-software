@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "JDA_software"
+version = "0.1.0"
+description = "A package for performing forecast on Bike Sharing dataset"
+authors = ["Yasaman Samiee <Yasaman.msamiee@gamil.com>"]
+readme = "README.md"
+
+packages = [
+    {include = "jda",from = "src"}
+]
+
+build= "build.py"
+
+
+
+
+[tool.poetry.dependencies]
+python = ">=3.7.6,<3.10.0"
+scikit-learn = "^0.22.2"
+numpy = "^1.18.1"
+
+ipykernel = "^6.4.2"
+[tool.poetry.dev-dependencies]
+Cython = "^0.29.21"
+pandas = "1.3.4"
+ipykernel = "^6.4.2"
+pytest = "*"
+scipy = "1.7.1"
+matplotlib = "^3.2.0"
+seaborn = "^0.11.2"
+black = "21.9b0"
+nb_black = "^1.0.7"
+myst-parser = "*"
+
+
+
+[tool.black]
+line-length = 100
+target-version = ['py37']
+include = '\.pyi?$'
+exclude = ""
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

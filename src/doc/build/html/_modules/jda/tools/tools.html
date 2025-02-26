@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>jda.tools.tools &#8212; Bike Sharing 1.0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for jda.tools.tools</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cycler</span>
+
+<div class="viewcode-block" id="make_heatmap"><a class="viewcode-back" href="../../../jda.tools.html#jda.tools.tools.make_heatmap">[docs]</a><span class="k">def</span> <span class="nf">make_heatmap</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot the heatmap of variables associations using Seaborn.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data: pd.DataFrame</span>
+<span class="sd">        The dataset before performing train/test split.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">annot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="calculate_mape"><a class="viewcode-back" href="../../../jda.tools.html#jda.tools.tools.calculate_mape">[docs]</a><span class="k">def</span> <span class="nf">calculate_mape</span><span class="p">(</span><span class="n">y_true</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates mean absolute percentage error. </span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y_true: np.array</span>
+<span class="sd">        The training labels of target value. </span>
+<span class="sd">        </span>
+<span class="sd">    y_pred: np.array</span>
+<span class="sd">        The predicted labels of target values.&quot;&quot;&quot;</span>
+    
+    <span class="n">mape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">y_true</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">mape</span></div>
+
+<div class="viewcode-block" id="calculate_rmse"><a class="viewcode-back" href="../../../jda.tools.html#jda.tools.tools.calculate_rmse">[docs]</a><span class="k">def</span> <span class="nf">calculate_rmse</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates root mean squared error. </span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y_true: np.array</span>
+<span class="sd">        The training labels of target value. </span>
+<span class="sd">        </span>
+<span class="sd">    y_pred: np.array</span>
+<span class="sd">        The predicted labels of target values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">rmse</span></div>
+
+<div class="viewcode-block" id="calculate_scatter_index"><a class="viewcode-back" href="../../../jda.tools.html#jda.tools.tools.calculate_scatter_index">[docs]</a><span class="k">def</span> <span class="nf">calculate_scatter_index</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates scatter index. </span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y_true: np.array</span>
+<span class="sd">        The training labels of target value. </span>
+<span class="sd">        </span>
+<span class="sd">    y_pred: np.array</span>
+<span class="sd">        The predicted labels of target values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+        
+    <span class="n">si</span> <span class="o">=</span> <span class="n">calculate_rmse</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span><span class="o">/</span><span class="n">y_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">si</span></div>
+
+<div class="viewcode-block" id="plot_feature_importance"><a class="viewcode-back" href="../../../jda.tools.html#jda.tools.tools.plot_feature_importance">[docs]</a><span class="k">def</span> <span class="nf">plot_feature_importance</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">feature_importances</span><span class="p">):</span>
+    <span class="n">feature_importances</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;feature&quot;</span><span class="p">:</span> <span class="n">train_features</span><span class="p">,</span> 
+        <span class="s2">&quot;importance&quot;</span><span class="p">:</span> <span class="n">feature_importances</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">feature_importances</span> <span class="o">=</span> <span class="n">feature_importances</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;importance&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">[</span><span class="s2">&quot;feature&quot;</span><span class="p">],</span> <span class="n">feature_importances</span><span class="p">[</span><span class="s2">&quot;importance&quot;</span><span class="p">])</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">cycler</span><span class="p">(</span>
+    <span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;#EE6666&quot;</span><span class="p">,</span> <span class="s2">&quot;#3388BB&quot;</span><span class="p">,</span> <span class="s2">&quot;#9988DD&quot;</span><span class="p">,</span> <span class="s2">&quot;#EECC55&quot;</span><span class="p">,</span> <span class="s2">&quot;#88BB44&quot;</span><span class="p">,</span> <span class="s2">&quot;#FFBBBB&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span>
+        <span class="s2">&quot;axes&quot;</span><span class="p">,</span>
+        <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;#E6E6E6&quot;</span><span class="p">,</span>
+        <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="n">axisbelow</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">prop_cycle</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s2">&quot;grid&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s2">&quot;xtick&quot;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;out&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s2">&quot;ytick&quot;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;out&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s2">&quot;patch&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;#E6E6E6&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">[</span><span class="s2">&quot;feature&quot;</span><span class="p">],</span> <span class="n">feature_importances</span><span class="p">[</span><span class="s2">&quot;importance&quot;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;feature Importance&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Importance&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;features used&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Bike Sharing</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">src</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Yasaman Smaiee.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

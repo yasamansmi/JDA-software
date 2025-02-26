@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Part 1: Building the Model &#8212; Bike Sharing 1.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Part 2: Scalability" href="part2.html" />
+    <link rel="prev" title="Welcome to Bike Sharing’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="part-1-building-the-model">
+<h1>Part 1: Building the Model<a class="headerlink" href="#part-1-building-the-model" title="Permalink to this headline">¶</a></h1>
+<section id="random-forest">
+<h2>Random Forest<a class="headerlink" href="#random-forest" title="Permalink to this headline">¶</a></h2>
+<p>In this package forecast is performed using Random Forest Regression, an ensemble learning method, combining multiple trees and using the mean of their predicted value as the ultimate prediction to solve complex problems. Random Forest is a bagging algorithm and therefore, it reduces the chances of overfitting. In every random forest tree, a subset of features is used for prediction in each node and this number could be modified in the hyperparameter tuning phase.</p>
+<p>The reason for choosing Random Forest is that it has proved to be efficient in data with different types of features. One crucial and favorable aspect about Random Forest is that it does not need any encoding in the case of categorical or unordered features. As a matter of fact, some studies have shown that random forest does not perform well with one-hot encoding due to data sparsity. In addition, the random forest can produce acceptable results without the need for extensive hyperparameter tuning.</p>
+<p>Finally, the random forest can also help us find feature importances and improve the model based on this information.</p>
+<p>In this package, the cross-validation is inactive by default, since it would slow down the algorithm due to heavy computations. . However, the user is free to set the parameter to True and perform hyperparameter tuning each time. Random grid search is used to this end (Please see the documentation for the modules)</p>
+<p>Two built models are compared in the following section. The first model is built with 7 lags (The target feature value of the seven previous days) and all possible features. The model is created with a mean absolute percentage error of 26.13%, and a root mean squared of 35.26, and a scatter index of 0.19.</p>
+<a class="reference internal image-reference" href="_images/first_model.png"><img alt="Alternative text" src="_images/first_model.png" style="width: 400px;" /></a>
+<p>Due to unimportance of many features, they are omitted and the new model is run with the following results. The model is created with a mean absolute percentage error of 24.77%, and a root mean squared of 36.15, and a scatter index of 0.19.</p>
+<a class="reference internal image-reference" href="_images/second_model.png"><img alt="Alternative text" src="_images/second_model.png" style="width: 400px;" /></a>
+</section>
+<section id="improvements-and-todos">
+<h2>Improvements and TODOs<a class="headerlink" href="#improvements-and-todos" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Improvement in hyperparameter tuning could be made by expanding the grids and the number of random sets to be tested.</p></li>
+<li><p>An increase in the number of trees could improve model performance.</p></li>
+<li><p>The tests in this package are not sufficient, they are only samples and need to be extended.</p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Bike Sharing</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Part 1: Building the Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#random-forest">Random Forest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#improvements-and-todos">Improvements and TODOs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="part2.html">Part 2: Scalability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">jda Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">src</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Bike Sharing’s documentation!</a></li>
+      <li>Next: <a href="part2.html" title="next chapter">Part 2: Scalability</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Yasaman Smaiee.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/part1.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
