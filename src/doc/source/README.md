@@ -1,4 +1,4 @@
-# jda Software
+# Bike Sharing Forecast Software
 
 A package to forecast the rented bikes per hour!
 

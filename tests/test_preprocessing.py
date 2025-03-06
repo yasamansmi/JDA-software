@@ -1,5 +1,5 @@
 import pytest
-from jda import Preprocessing, preprocessing
+from bike_sharing import Preprocessing, preprocessing
 import pandas as pd
 
 class TestPreprocessing():

@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "JDA_software"
+name = "bike_sharing_software"
 version = "0.1.0"
 description = "A package for performing forecast on Bike Sharing dataset"
 authors = ["Yasaman Samiee <Yasaman.msamiee@gamil.com>"]
 readme = "README.md"
 
 packages = [
-    {include = "jda",from = "src"}
+    {include = "bike_sharing",from = "src"}
 ]
 
 build= "build.py"

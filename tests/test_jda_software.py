@@ -1,4 +1,4 @@
-from jda_software import __version__
+from bike_sharing_software import __version__
 
 
 def test_version():

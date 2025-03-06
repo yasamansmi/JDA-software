@@ -1,4 +1,4 @@
-from jda import Pipeline
+from bike_sharing import Pipeline
 import matplotlib.pyplot as plt
 import os
 

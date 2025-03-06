@@ -1,5 +1,5 @@
 import pytest
-from jda import RandomForest
+from bike_sharing import RandomForest
 import pandas as pd
 import numpy as np
 
